@@ -84,8 +84,3 @@ void Matrix::addY(int y)
         }
     }
 }
-
-void Matrix::insert(int x, int y, int value)
-{
-    
-}
