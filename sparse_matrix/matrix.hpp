@@ -16,14 +16,14 @@ class Matrix;
 
 class Node {
 private:
-    int id;
+    int data;
     Node* right;
     Node* left;
     Node* up;
     Node* down;
 public:
-    Node(int id){
-        this -> id = id;
+    Node(int data){
+        this -> data = data;
         right = NULL;
         left = NULL;
         up = NULL;
@@ -55,7 +55,7 @@ public:
     }
     int getId()
     {
-        return id;
+        return data;
     }
 };
 
