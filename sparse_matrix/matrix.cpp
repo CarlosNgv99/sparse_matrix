@@ -18,8 +18,8 @@ void Matrix::add(int x, int y, int value)
     insert(x, y, value);
 }
 
-void Matrix::addX(int x)
-{
+void Matrix::addX(int x) // Insert sorted.
+{                        // Second conditions can be omitted.
     Node* p;
     p = header;
     if(p -> getRight() == NULL)
@@ -30,21 +30,22 @@ void Matrix::addX(int x)
     }
     else
     {
-        while(p -> getRight() != NULL && p -> getRight() -> getId() < x )
+        while(p -> getRight() != NULL) // Second condition to insert
+                                                                            //  sorted.
         {
             p = p -> getRight();
         }
-        if(p -> getRight() == NULL && p -> getId() != x)
+        if(p -> getRight() == NULL)
         {
             Node* q = new Node(x);
             p -> setRight(q);
             q -> setLeft(p);
         }
-        else if (p -> getRight() != NULL && p -> getRight() -> getId() != x)
+        else if (p -> getRight() != NULL)
         {
-            Node* r = p -> getRight();
-            Node* q = new Node(x);
-            p -> setRight(q);
+            Node* r = p -> getRight(); // Next node.
+            Node* q = new Node(x);     // New node.
+            p -> setRight(q);          // p is previous node.
             q -> setLeft(p);
             q -> setRight(r);
             r -> setLeft(q);
@@ -63,17 +64,17 @@ void Matrix::addY(int y)
     }
     else
     {
-        while(p -> getDown() != NULL && p -> getDown() -> getId() < y)
+        while(p -> getDown() != NULL && p -> getDown() -> getData() < y)
         {
             p = p -> getDown();
         }
-        if(p -> getDown() == NULL && p -> getId() != y)
+        if(p -> getDown() == NULL && p -> getData() != y)
         {
             Node* q = new Node(y);
             p -> setDown(q);
             q -> setUp(p);
         }
-        if(p -> getDown() != NULL && p -> getDown() -> getId() != y)
+        if(p -> getDown() != NULL && p -> getDown() -> getData() != y)
         {
             Node* r = p -> getDown();
             Node* q = new Node(y);
@@ -84,3 +85,32 @@ void Matrix::addY(int y)
         }
     }
 }
+
+void Matrix::insert(int x, int y, int value)
+{
+    Node* p = new Node(value);
+    Node* x_header = header;
+    Node* y_header = header;
+    
+    while(x_header -> getRight() != NULL)
+    {
+        x_header = x_header -> getRight();
+        if(x_header -> getData() == x)
+        {
+            x_header -> setDown(p);
+            p -> setUp(x_header);
+        }
+    }
+    
+    while(y_header -> getDown() != NULL)
+    {
+        y_header = y_header -> getDown();
+        if(y_header -> getData() == y)
+        {
+            y_header -> setRight(p);
+            p -> setLeft(y_header);
+        }
+    }
+    
+}
+

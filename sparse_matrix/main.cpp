@@ -7,9 +7,14 @@
 //
 
 #include <iostream>
+#include "matrix.hpp"
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+    Matrix matrix;
+    matrix.add(2, 1, 3);
+    matrix.add(5, 1, 2);
+    matrix.add(6, 1, 4);
+
+    matrix.printX();
     return 0;
 }

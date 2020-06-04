@@ -10,7 +10,7 @@
 #define matrix_hpp
 
 #include <stdio.h>
-
+#include <iostream>
 class Node;
 class Matrix;
 
@@ -53,7 +53,7 @@ public:
     void setDown(Node* value){
         down = value;
     }
-    int getId()
+    int getData()
     {
         return data;
     }
@@ -72,6 +72,16 @@ public:
     void addX(int);
     void addY(int);
     void insert(int,int,int);
+    void printX()
+    {
+        Node* p = header;
+        while(p -> getRight() != NULL)
+        {
+            std::cout << p -> getData() << " -> ";
+            p = p -> getRight();
+        }
+        std::cout << p -> getData() << std::endl;
+    }
 };
 
 #endif /* matrix_hpp */
