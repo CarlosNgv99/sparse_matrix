@@ -102,8 +102,10 @@ public:
     void showGraph();
     void printY();
     void printX();
-    bool SearchX(int);
-    bool SearchY(int);
+    Node* SearchX(int);
+    Node* SearchY(int);
+    bool verifyX(int,Node*,Node*);
+    bool verifyY(int,Node*,Node*);
     Node* SearchValue(int,int);
 };
 

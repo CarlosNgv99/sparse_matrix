@@ -14,9 +14,9 @@ using namespace std;
 
 void Matrix::add(int x, int y, int value)
 {
-    if(SearchX(x) == false)
+    if(SearchX(x) == NULL)
         addX(x);
-    if(SearchY(y) == false)
+    if(SearchY(y) == NULL)
         addY(y);
     insert(x, y, value);
 }
@@ -72,7 +72,7 @@ void Matrix::addY(int y)
     }
 }
 
-bool Matrix::SearchX(int x)
+Node* Matrix::SearchX(int x)
 {
     Node* p = header;
     while(p -> getRight() != NULL)
@@ -80,13 +80,13 @@ bool Matrix::SearchX(int x)
         p = p -> getRight();
         if(p -> getData() == x)
         {
-            return true;
+            return p;
         }
     }
-    return false;
+    return nullptr;
 }
 
-bool Matrix::SearchY(int y)
+Node* Matrix::SearchY(int y)
 {
     Node* p = header;
     while(p -> getDown() != NULL)
@@ -94,116 +94,186 @@ bool Matrix::SearchY(int y)
         p = p -> getDown();
         if(p -> getData() == y)
         {
-            return true;
+            return p;
         }
     }
-    return false;
+    return nullptr;
 }
 
 void Matrix::insert(int x, int y, int value)
 {
     Node* p = new Node(value);
-    Node* x_header = header;
-    Node* y_header = header;
+    Node* x_header;
+    Node* y_header;
     
-    while(x_header -> getRight() != NULL)
+    x_header = SearchX(x);
+    y_header = SearchY(y);
+    
+    // x axis insertion
+    
+    if(x_header -> getDown() == NULL)
     {
-        x_header = x_header -> getRight();
-        if(x_header -> getData() == x)
+        x_header -> setDown(p);
+        p -> setUp(x_header);
+    }
+    else if(y_header -> getDown() == NULL)
+    {
+        Node* aux = x_header -> getDown();
+        while(aux -> getDown() != NULL)
         {
-            // Insert first
-            if(x_header -> getDown() == NULL)
+            aux = aux -> getDown();
+        }
+        if(!verifyY(y, aux, p))
+        {
+            aux -> setDown(p);
+            p -> setUp(aux);
+        }
+    } // Insert Mid.
+    else
+    {
+        Node* aux = x_header;
+        do{
+            aux = aux -> getDown();
+            if(!verifyY(y, aux, p))
             {
-                x_header -> setDown(p);
-                p -> setUp(x_header);
-            }
-            else
-            {
-                // Insert mid
-                Node* aux = x_header -> getDown();
-                y_header = aux -> getLeft();
-                while(y_header -> getLeft() != NULL)
+                Node* aux_y = aux -> getLeft();
+                while(aux_y -> getLeft() != NULL)
                 {
-                    y_header = y_header -> getLeft();
+                    aux_y = aux_y -> getLeft();
                 }
-                while(y_header -> getUp() != NULL)
+                while(aux_y -> getUp() != NULL)
                 {
-                    if(y_header ->getData() == y)
+                    if(aux_y -> getData() == y)
                     {
                         p -> setDown(aux);
                         p -> setUp(aux -> getUp());
                         aux -> getUp() -> setDown(p);
-                        aux -> setUp(aux);
+                        aux -> setUp(p);
                         break;
                     }
-                    y_header = y_header -> getUp();
-                }
-                if(p -> getUp() == NULL && p -> getBack() == NULL)
-                {
-                    aux -> setDown(p);
-                    p -> setUp(aux);
-                    break;
+                    aux_y = aux_y -> getUp();
                 }
             }
-        }
+        }while(aux -> getDown() != NULL && p-> getUp() == NULL);
         
+        if(p -> getUp() == NULL && p -> getFront() == NULL)
+        {
+            aux -> setDown(p);
+            p -> setUp(aux);
+        }
     }
     
-    if(p -> getBack() != NULL)
+    if(p -> getFront() != NULL) // return if item is already inserted.
     {
         return;
     }
-    y_header = header;
-
-    while(y_header -> getDown() != NULL)
+    
+    // y axis insertion
+    
+    if(y_header -> getRight() == NULL)
     {
-        y_header = y_header -> getDown();
-        if(y_header -> getData() == y)
+        y_header -> setRight(p);
+        p -> setLeft(y_header);
+    }
+    else if(x_header -> getRight() == NULL)
+    {
+        Node* aux = y_header -> getRight();
+        while(aux -> getRight() != NULL)
         {
-            if(y_header -> getRight() == NULL)
-            {
-                y_header -> setRight(p);
-                p -> setLeft(y_header);
-            }
-            else
-            {
-                Node* aux2 = y_header -> getRight();
-                x_header = aux2 -> getUp();
-                while(x_header -> getUp() != NULL)
-                {
-                    x_header = x_header -> getUp();
-                }
-                while(x_header -> getLeft() != NULL)
-                {
-                    if(x_header -> getData() == x)
-                    {
-                        p -> setRight(aux2);
-                        p -> setLeft(aux2 -> getLeft());
-                        aux2 -> getLeft() -> setRight(p);
-                        aux2 -> setLeft(p);
-                        break;
-                    }
-                    x_header = x_header -> getLeft();
-                }
-                if(p -> getLeft() == NULL && p -> getBack() == NULL)
-                {
-                    aux2 -> setRight(p);
-                    p -> setLeft(aux2);
-                    break;
-                }
-            }
+            aux = aux -> getRight();
+        }
+        if(!verifyX(x, aux, p))
+        {
+            aux -> setRight(p);
+            p -> setLeft(aux);
         }
     }
-    cout <<" "<< endl;
-    if(p->getLeft()!=NULL)
-        cout << " left: " << p->getLeft()->getData();
-    if(p->getRight()!=NULL)
-        cout << " right: " << p->getRight()->getData();
-    if(p->getUp()!=NULL)
-        cout << " up: " << p->getUp()->getData()<<endl;
-    if(p->getDown()!=NULL)
-        cout << " down: " << p->getDown()->getData();
-    
+    else
+    {
+        Node* aux = y_header; // Insert mid.
+        do
+        {
+            aux = aux -> getRight();
+            if(!verifyX(x, aux, p))
+            {
+                Node* x_aux = aux -> getUp();
+                while(x_aux -> getUp() != NULL)
+                {
+                    x_aux = x_aux -> getUp();
+                }
+                while(x_aux -> getLeft() != NULL)
+                {
+                    if(x_aux -> getData() == x)
+                    {
+                        p -> setRight(aux);
+                        p -> setLeft(aux -> getLeft());
+                        aux -> getLeft() -> setRight(p);
+                        aux -> setLeft(p);
+                        break;
+                    }
+                    x_aux = x_aux -> getLeft();
+                }
+                
+            }
+            
+        }while(aux -> getRight() != NULL && p -> getLeft() == NULL);
+        
+        if(p -> getLeft() == NULL &&  p -> getFront() == NULL)
+        {
+            aux -> setRight(p);
+            p -> setLeft(aux);
+        }
+    }
+}
+
+
+
+
+
+bool Matrix::verifyY(int value, Node* start,Node* nodeValue)
+{
+    Node* aux_y = start -> getLeft();
+    while(aux_y -> getLeft() != NULL)
+    {
+        aux_y = aux_y -> getLeft();
+    }
+    if(aux_y -> getData() == value)
+    {
+        while(start -> getBack() != NULL)
+        {
+            start = start -> getBack();
+        }
+        start -> setBack(nodeValue);
+        nodeValue -> setFront(start);
+        cout << "Front:" << start -> getData() << endl;
+        cout << "Back:" << start -> getBack() -> getData() << endl;
+
+        return true;
+    }
+    return false;
+}
+
+
+bool Matrix::verifyX(int value, Node* start,Node* nodeValue)
+{
+    Node* aux_x = start -> getUp();
+    while(aux_x -> getUp() != NULL)
+    {
+        aux_x = aux_x -> getUp();
+    }
+    if(aux_x -> getData() == value)
+    {
+        while(start -> getBack() != NULL)
+        {
+            start = start -> getBack();
+        }
+        start -> setBack(nodeValue);
+        nodeValue -> setFront(start);
+        cout << "Front:" << start -> getData() << endl;
+        cout << "Back:" << start -> getBack() -> getData() << endl;
+        return true;
+    }
+    return false;
 }
 
 
@@ -213,7 +283,6 @@ Node* Matrix::SearchValue(int x, int y)
     Node* x_header = header;
     Node* y_header = header ;
     Node* aux = nullptr; // Recorre en posicion x hacia abajo, conforme baja la cabecera y.
-    
     while(x_header -> getRight() != NULL)
     {
         x_header = x_header -> getRight();
@@ -224,16 +293,18 @@ Node* Matrix::SearchValue(int x, int y)
             {
                 y_header = y_header -> getDown();
                 aux = aux -> getDown();
-                if(y_header -> getData() == y || aux -> getDown() == NULL)
+                
+                if(y_header -> getData() == y || aux -> getDown()  == NULL )
                 {
                     p = aux;
                     return p;
                 }
+                
             }
         }
         
     }
-    return 0;
+    return nullptr;
 }
 
 void Matrix::printX()

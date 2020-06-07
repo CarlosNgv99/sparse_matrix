@@ -9,29 +9,27 @@ node0 [label="MATRIX"];
 node0->10[dir=both];
 10->4[dir=both];
 4->11[dir=both];
-2[label="2"]
 7[label="7"]
+2[label="2"]
 5[label="5"]
-node0->2[dir=both];
-2->7[dir=both];
-7->5[dir=both];
+node0->7[dir=both];
+7->2[dir=both];
+2->5[dir=both];
+18[label="18"]
+12->18[constraint=false, dir=both];
+{rank=same; 12; 18;}
+7->18[constraint=false, dir=both];
+{rank=same; 7; 18;}
+10->18[dir=both]
+19->18[dir=both]
 19[label="19"]
 2->19[constraint=false, dir=both];
 {rank=same; 2; 19;}
-10->19[dir=both]
 18->19[dir=both]
-18[label="18"]
-12->18[constraint=false, dir=both];
-{rank=same; 12; 18;}
-7->18[constraint=false, dir=both];
-{rank=same; 7; 18;}
-19->18[dir=both]
-18[label="18"]
-12->18[constraint=false, dir=both];
-{rank=same; 12; 18;}
-7->18[constraint=false, dir=both];
-{rank=same; 7; 18;}
-19->18[dir=both]
+19[label="19"]
+2->19[constraint=false, dir=both];
+{rank=same; 2; 19;}
+18->19[dir=both]
 12[label="12"]
 18->12[constraint=false, dir=both];
 {rank=same; 18; 12;}
