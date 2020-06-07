@@ -21,6 +21,8 @@ private:
     Node* left;
     Node* up;
     Node* down;
+    Node* back;
+    Node* front;
 public:
     Node(int data){
         this -> data = data;
@@ -28,7 +30,26 @@ public:
         left = NULL;
         up = NULL;
         down = NULL;
+        back = NULL;
+        front = NULL;
     };
+    
+    Node* getBack()
+    {
+        return back;
+    }
+    void setBack(Node* value)
+    {
+        back = value;
+    }
+    Node* getFront()
+    {
+        return front;
+    }
+    void setFront(Node* value)
+    {
+        front = value;
+    }
     Node* getRight(){
         return right;
     };
@@ -57,6 +78,10 @@ public:
     {
         return data;
     }
+    void setData(int value)
+    {
+        data = value;
+    }
 };
 
 class Matrix
@@ -72,16 +97,14 @@ public:
     void addX(int);
     void addY(int);
     void insert(int,int,int);
-    void printX()
-    {
-        Node* p = header;
-        while(p -> getRight() != NULL)
-        {
-            std::cout << p -> getData() << " -> ";
-            p = p -> getRight();
-        }
-        std::cout << p -> getData() << std::endl;
-    }
+    void getDot();
+    void draw();
+    void showGraph();
+    void printY();
+    void printX();
+    bool SearchX(int);
+    bool SearchY(int);
+    Node* SearchValue(int,int);
 };
 
 #endif /* matrix_hpp */

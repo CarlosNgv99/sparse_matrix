@@ -11,10 +11,12 @@
 
 int main(int argc, const char * argv[]) {
     Matrix matrix;
-    matrix.add(2, 1, 3);
-    matrix.add(5, 1, 2);
-    matrix.add(6, 1, 4);
-
-    matrix.printX();
+    
+    matrix.add(10, 2, 19);
+    matrix.add(4, 7, 12);
+    matrix.add(11, 5, 14);
+    matrix.add(10,7,18);
+    matrix.getDot();
+    matrix.printY();
     return 0;
 }
