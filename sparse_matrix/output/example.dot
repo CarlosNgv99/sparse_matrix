@@ -6,15 +6,19 @@ node0 [label="MATRIX"];
 10[label="10"]
 4[label="4"]
 11[label="11"]
+100[label="100"]
 node0->10[dir=both];
 10->4[dir=both];
 4->11[dir=both];
+11->100[dir=both];
 7[label="7"]
 2[label="2"]
 5[label="5"]
+102[label="102"]
 node0->7[dir=both];
 7->2[dir=both];
 2->5[dir=both];
+5->102[dir=both];
 18[label="18"]
 12->18[constraint=false, dir=both];
 {rank=same; 12; 18;}
@@ -25,25 +29,34 @@ node0->7[dir=both];
 19[label="19"]
 2->19[constraint=false, dir=both];
 {rank=same; 2; 19;}
-18->19[dir=both]
 19[label="19"]
-2->19[constraint=false, dir=both];
-{rank=same; 2; 19;}
-18->19[dir=both]
+19[label="19"]
 12[label="12"]
-18->12[constraint=false, dir=both];
-{rank=same; 18; 12;}
 4->12[dir=both]
-12[label="12"]
-18->12[constraint=false, dir=both];
-{rank=same; 18; 12;}
-4->12[dir=both]
+15->12[dir=both]
+15[label="15"]
+19->15[constraint=false, dir=both];
+{rank=same; 19; 15;}
+15[label="15"]
+15[label="15"]
 14[label="14"]
 5->14[constraint=false, dir=both];
 {rank=same; 5; 14;}
 11->14[dir=both]
-14[label="14"]
-5->14[constraint=false, dir=both];
-{rank=same; 5; 14;}
-11->14[dir=both]
-{rank=same; node0; 10; 4; 11;}}
+345->14[dir=both]
+345[label="345"]
+102->345[constraint=false, dir=both];
+{rank=same; 102; 345;}
+345[label="345"]
+345[label="345"]
+908[label="908"]
+12->908[constraint=false, dir=both];
+{rank=same; 12; 908;}
+100->908[dir=both]
+1003->908[dir=both]
+1003[label="1003"]
+345->1003[constraint=false, dir=both];
+{rank=same; 345; 1003;}
+1003[label="1003"]
+1003[label="1003"]
+{rank=same; node0; 10; 4; 11; 100;}}

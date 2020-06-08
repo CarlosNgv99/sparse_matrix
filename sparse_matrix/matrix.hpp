@@ -23,7 +23,12 @@ private:
     Node* down;
     Node* back;
     Node* front;
+
 public:
+    bool linkR;
+    bool linkL;
+    bool linkD;
+    bool linkU;
     Node(int data){
         this -> data = data;
         right = NULL;
@@ -32,6 +37,10 @@ public:
         down = NULL;
         back = NULL;
         front = NULL;
+        linkD = false;
+        linkR = false;
+        linkU = false;
+        linkL = false;
     };
     
     Node* getBack()

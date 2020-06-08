@@ -392,8 +392,7 @@ void Matrix::getDot()
     Node* x_axis = header;
     Node* y_axis = header;
     Node* aux = nullptr;
-    
-    
+    string array[100];
     
     while(x_axis -> getRight() != NULL)
     {
@@ -407,27 +406,49 @@ void Matrix::getDot()
                 file << to_string(aux -> getData()) << "[label=\""<< aux -> getData()<<"\"]"<<endl;
                 if(aux -> getRight() != NULL)
                 {
-                    file << aux -> getRight() -> getData() << "->" << aux ->getData() << "[constraint=false, dir=both];" << endl;
-                    file << "{rank=same; " << aux -> getRight() -> getData() <<"; " << aux -> getData() <<";}"<<endl;
+                    if(aux -> linkR == false)
+                    {
+                        file << aux -> getRight() -> getData() << "->" << aux ->getData() << "[constraint=false, dir=both];" << endl;
+                        file << "{rank=same; " << aux -> getRight() -> getData() <<"; " << aux -> getData() <<";}"<<endl;
+                        aux -> getRight() -> linkU = false;
+                        aux -> getRight() -> linkR = true;
+                        aux -> getRight() -> linkD = false;
+                        aux -> getRight() -> linkL = true;
+                    }
                 }
                 if(aux -> getLeft() != NULL)
                 {
-                    file << aux -> getLeft() -> getData() << "->" << aux ->getData() << "[constraint=false, dir=both];" << endl;
-                    file << "{rank=same; " << aux -> getLeft() -> getData() <<"; " << aux -> getData() <<";}"<<endl;
+                    if(aux -> linkL == false)
+                    {
+                        file << aux -> getLeft() -> getData() << "->" << aux ->getData() << "[constraint=false, dir=both];" << endl;
+                        file << "{rank=same; " << aux -> getLeft() -> getData() <<"; " << aux -> getData() <<";}"<<endl;
+                        aux -> linkL = true;
+                    }
                 }
                 if(aux -> getUp() != NULL)
                 {
-                    file << aux -> getUp() -> getData() << "->" << aux ->getData() << "[dir=both]" << endl;
+                    if(aux -> linkU == false)
+                    {
+                        file << aux -> getUp() -> getData() << "->" << aux ->getData() << "[dir=both]" << endl;
+                        aux -> linkU = true;
+                    }
                 }
                 if(aux -> getDown() != NULL)
                 {
-                  file << aux -> getDown() -> getData() << "->" << aux ->getData() << "[dir=both]" << endl;
+                    if(aux -> linkD == false)
+                    {
+                        file << aux -> getDown() -> getData() << "->" << aux ->getData() << "[dir=both]" << endl;
+                        aux -> getDown() -> linkU = true;
+                        aux -> getDown() -> linkR = true;
+                        aux -> getDown() -> linkD = false;
+                        aux -> getDown() -> linkL = false;
+                    }
                 }
                 
             }
 
         }
-        y_axis = header -> getDown();
+        y_axis = header;
 
     }
     
