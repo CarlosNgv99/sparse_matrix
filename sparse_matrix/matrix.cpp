@@ -9,10 +9,11 @@
 #include "matrix.hpp"
 #include <iostream>
 #include <fstream>
+#include <string>
 
 using namespace std;
 
-void Matrix::add(int x, int y, int value)
+void Matrix::add(std::string x, std::string y, std::string value)
 {
     if(SearchX(x) == NULL)
         addX(x);
@@ -21,7 +22,7 @@ void Matrix::add(int x, int y, int value)
     insert(x, y, value);
 }
 
-void Matrix::addX(int x)
+void Matrix::addX(std::string x)
 {
     Node* p;
     p = header;
@@ -48,7 +49,7 @@ void Matrix::addX(int x)
 
 
 
-void Matrix::addY(int y)
+void Matrix::addY(string y)
 {
     Node* p = header;
     if(p -> getDown() == NULL)
@@ -72,7 +73,7 @@ void Matrix::addY(int y)
     }
 }
 
-Node* Matrix::SearchX(int x)
+Node* Matrix::SearchX(string x)
 {
     Node* p = header;
     while(p -> getRight() != NULL)
@@ -86,7 +87,7 @@ Node* Matrix::SearchX(int x)
     return nullptr;
 }
 
-Node* Matrix::SearchY(int y)
+Node* Matrix::SearchY(string y)
 {
     Node* p = header;
     while(p -> getDown() != NULL)
@@ -100,7 +101,7 @@ Node* Matrix::SearchY(int y)
     return nullptr;
 }
 
-void Matrix::insert(int x, int y, int value)
+void Matrix::insert(string x, string y, string value)
 {
     Node* p = new Node(value);
     Node* x_header;
@@ -230,7 +231,7 @@ void Matrix::insert(int x, int y, int value)
 
 
 
-bool Matrix::verifyY(int value, Node* start,Node* nodeValue)
+bool Matrix::verifyY(string value, Node* start,Node* nodeValue)
 {
     Node* aux_y = start -> getLeft();
     while(aux_y -> getLeft() != NULL)
@@ -254,7 +255,7 @@ bool Matrix::verifyY(int value, Node* start,Node* nodeValue)
 }
 
 
-bool Matrix::verifyX(int value, Node* start,Node* nodeValue)
+bool Matrix::verifyX(string value, Node* start,Node* nodeValue)
 {
     Node* aux_x = start -> getUp();
     while(aux_x -> getUp() != NULL)
@@ -277,7 +278,7 @@ bool Matrix::verifyX(int value, Node* start,Node* nodeValue)
 }
 
 
-Node* Matrix::SearchValue(int x, int y)
+Node* Matrix::SearchValue(string x, string y)
 {
     Node* p = nullptr;
     Node* x_header = header;
@@ -339,7 +340,7 @@ void Matrix::getDot()
     file << "rankdir = TB;" << endl;
     file << "node [shape=rectangle, height=0.5, width=0.5];" << endl;
     file << "graph[ nodesep = 0.5];" << endl;
-    file << "node0 [label="<<"\"MATRIX\""<<"];" << endl;
+    file << "node0 [label="<<"\""<<header -> getData()<<"\""<<"];" << endl;
     
     // COLUMNS
     
@@ -347,19 +348,19 @@ void Matrix::getDot()
     p = p -> getRight();
     while(p -> getRight() != NULL)
     {
-        file << to_string((p -> getData())) << "[label=\""<< p -> getData()<<"\"]"<<endl;
+        file << p -> getData() << "[label=\""<< p -> getData()<<"\"]"<<endl;
         p = p -> getRight();
     }
-    file << to_string((p -> getData())) << "[label=\""<< p -> getData()<<"\"]"<<endl;
+    file << p -> getData() << "[label=\""<< p -> getData()<<"\"]"<<endl;
     if(header -> getRight() != NULL){
         p = header -> getRight();
-        file << "node0->"<<to_string(p -> getData())<<"[dir=both];"<< endl;
+        file << "node0->"<<p -> getData()<<"[dir=both];"<< endl;
     }
     
     p = header -> getRight();
     while(p -> getRight() != NULL)
     {
-        file << to_string(p ->getRight() -> getLeft() -> getData()) << "->" << to_string(p -> getRight() -> getData()) <<"[dir=both];"<< endl;
+        file << p ->getRight() -> getLeft() -> getData() << "->" << p -> getRight() -> getData() <<"[dir=both];"<< endl;
         p = p -> getRight();
     }
     
@@ -370,19 +371,19 @@ void Matrix::getDot()
     p = p -> getDown();
     while(p -> getDown() != NULL)
     {
-        file << to_string((p -> getData())) << "[label=\""<< p -> getData()<<"\"]"<<endl;
+        file << p -> getData() << "[label=\""<< p -> getData()<<"\"]"<<endl;
         p = p -> getDown();
     }
-    file << to_string((p -> getData())) << "[label=\""<< p -> getData()<<"\"]"<<endl;
+    file << p -> getData() << "[label=\""<< p -> getData()<<"\"]"<<endl;
     if(header -> getDown() != NULL){
         p = header -> getDown();
-        file << "node0->"<<to_string(p -> getData())<<"[dir=both];"<< endl;
+        file << "node0->"<<p -> getData()<<"[dir=both];"<< endl;
     }
     
     p = header -> getDown();
     while(p -> getDown() != NULL)
     {
-        file <<to_string(p ->getDown() -> getUp() -> getData()) << "->" << to_string(p -> getDown() -> getData()) <<"[dir=both];"<< endl;
+        file <<p ->getDown() -> getUp() -> getData() << "->" << p -> getDown() -> getData() <<"[dir=both];"<< endl;
         p = p -> getDown();
     }
     
@@ -403,7 +404,7 @@ void Matrix::getDot()
             aux = SearchValue(x_axis -> getData(), y_axis -> getData());
             if(aux != nullptr)
             {
-                file << to_string(aux -> getData()) << "[label=\""<< aux -> getData()<<"\"]"<<endl;
+                file << aux -> getData() << "[label=\""<< aux -> getData()<<"\"]"<<endl;
                 if(aux -> getRight() != NULL)
                 {
                     if(aux -> linkR == false)
@@ -423,6 +424,10 @@ void Matrix::getDot()
                         file << aux -> getLeft() -> getData() << "->" << aux ->getData() << "[constraint=false, dir=both];" << endl;
                         file << "{rank=same; " << aux -> getLeft() -> getData() <<"; " << aux -> getData() <<";}"<<endl;
                         aux -> linkL = true;
+                        aux -> linkD = true;
+                        aux -> linkR = true;
+                        aux -> linkU = false;
+                        
                     }
                 }
                 if(aux -> getUp() != NULL)
@@ -431,6 +436,9 @@ void Matrix::getDot()
                     {
                         file << aux -> getUp() -> getData() << "->" << aux ->getData() << "[dir=both]" << endl;
                         aux -> linkU = true;
+                        aux -> linkR = true;
+                        aux -> linkD = true;
+                        aux -> linkL = true;
                     }
                 }
                 if(aux -> getDown() != NULL)

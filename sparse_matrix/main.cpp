@@ -12,15 +12,14 @@
 int main(int argc, const char * argv[]) {
     Matrix matrix;
     
-    matrix.add(10,7,18);
-    matrix.add(10,7,33);
-    matrix.add(10, 2, 19);
-    matrix.add(4,7,12);
-    matrix.add(11,5,14);
-    matrix.add(4,2,15);
-    matrix.add(100,102,1003);
-    matrix.add(11,102,345);
-    matrix.add(100,7,908);
+    matrix.add("Guatemala","Walmart","Roberto");
+    matrix.add("Jalapa","Max","Juan");
+    matrix.add("Guatemala","Max","Louise");
+    matrix.add("Guatemala","Despensa","Roman");
+
+    matrix.add("Jalapa","Despensa","Luis");
+
+    matrix.add("Jalapa","Torre","Diego");
     matrix.getDot();
     matrix.printY();
     return 0;

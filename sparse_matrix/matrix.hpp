@@ -11,12 +11,13 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <string>
 class Node;
 class Matrix;
 
 class Node {
 private:
-    int data;
+    std::string data;
     Node* right;
     Node* left;
     Node* up;
@@ -29,7 +30,7 @@ public:
     bool linkL;
     bool linkD;
     bool linkU;
-    Node(int data){
+    Node(std::string data){
         this -> data = data;
         right = NULL;
         left = NULL;
@@ -83,7 +84,7 @@ public:
     void setDown(Node* value){
         down = value;
     }
-    int getData()
+    std::string getData()
     {
         return data;
     }
@@ -100,22 +101,22 @@ private:
 public:
     Matrix()
     {
-        header = new Node(0);
+        header = new Node("Header");
     };
-    void add(int,int,int);
-    void addX(int);
-    void addY(int);
-    void insert(int,int,int);
+    void add(std::string,std::string,std::string);
+    void addX(std::string);
+    void addY(std::string);
+    void insert(std::string,std::string,std::string);
     void getDot();
     void draw();
     void showGraph();
     void printY();
     void printX();
-    Node* SearchX(int);
-    Node* SearchY(int);
-    bool verifyX(int,Node*,Node*);
-    bool verifyY(int,Node*,Node*);
-    Node* SearchValue(int,int);
+    Node* SearchX(std::string);
+    Node* SearchY(std::string);
+    bool verifyX(std::string,Node*,Node*);
+    bool verifyY(std::string,Node*,Node*);
+    Node* SearchValue(std::string,std::string);
 };
 
 #endif /* matrix_hpp */

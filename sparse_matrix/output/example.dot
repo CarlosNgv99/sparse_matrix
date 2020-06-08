@@ -2,61 +2,43 @@ digraph g{
 rankdir = TB;
 node [shape=rectangle, height=0.5, width=0.5];
 graph[ nodesep = 0.5];
-node0 [label="MATRIX"];
-10[label="10"]
-4[label="4"]
-11[label="11"]
-100[label="100"]
-node0->10[dir=both];
-10->4[dir=both];
-4->11[dir=both];
-11->100[dir=both];
-7[label="7"]
-2[label="2"]
-5[label="5"]
-102[label="102"]
-node0->7[dir=both];
-7->2[dir=both];
-2->5[dir=both];
-5->102[dir=both];
-18[label="18"]
-12->18[constraint=false, dir=both];
-{rank=same; 12; 18;}
-7->18[constraint=false, dir=both];
-{rank=same; 7; 18;}
-10->18[dir=both]
-19->18[dir=both]
-19[label="19"]
-2->19[constraint=false, dir=both];
-{rank=same; 2; 19;}
-19[label="19"]
-19[label="19"]
-12[label="12"]
-4->12[dir=both]
-15->12[dir=both]
-15[label="15"]
-19->15[constraint=false, dir=both];
-{rank=same; 19; 15;}
-15[label="15"]
-15[label="15"]
-14[label="14"]
-5->14[constraint=false, dir=both];
-{rank=same; 5; 14;}
-11->14[dir=both]
-345->14[dir=both]
-345[label="345"]
-102->345[constraint=false, dir=both];
-{rank=same; 102; 345;}
-345[label="345"]
-345[label="345"]
-908[label="908"]
-12->908[constraint=false, dir=both];
-{rank=same; 12; 908;}
-100->908[dir=both]
-1003->908[dir=both]
-1003[label="1003"]
-345->1003[constraint=false, dir=both];
-{rank=same; 345; 1003;}
-1003[label="1003"]
-1003[label="1003"]
-{rank=same; node0; 10; 4; 11; 100;}}
+node0 [label="Header"];
+Guatemala[label="Guatemala"]
+Jalapa[label="Jalapa"]
+node0->Guatemala[dir=both];
+Guatemala->Jalapa[dir=both];
+Walmart[label="Walmart"]
+Max[label="Max"]
+Despensa[label="Despensa"]
+Torre[label="Torre"]
+node0->Walmart[dir=both];
+Walmart->Max[dir=both];
+Max->Despensa[dir=both];
+Despensa->Torre[dir=both];
+Roberto[label="Roberto"]
+Walmart->Roberto[constraint=false, dir=both];
+{rank=same; Walmart; Roberto;}
+Guatemala->Roberto[dir=both]
+Louise[label="Louise"]
+Juan->Louise[constraint=false, dir=both];
+{rank=same; Juan; Louise;}
+Max->Louise[constraint=false, dir=both];
+{rank=same; Max; Louise;}
+Roberto->Louise[dir=both]
+Roman[label="Roman"]
+Luis->Roman[constraint=false, dir=both];
+{rank=same; Luis; Roman;}
+Despensa->Roman[constraint=false, dir=both];
+{rank=same; Despensa; Roman;}
+Louise->Roman[dir=both]
+Roman[label="Roman"]
+Juan[label="Juan"]
+Jalapa->Juan[dir=both]
+Luis[label="Luis"]
+Juan->Luis[dir=both]
+Diego[label="Diego"]
+Torre->Diego[constraint=false, dir=both];
+{rank=same; Torre; Diego;}
+Luis->Diego[dir=both]
+Diego[label="Diego"]
+{rank=same; node0; Guatemala; Jalapa;}}
